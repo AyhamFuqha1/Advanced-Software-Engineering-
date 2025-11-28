@@ -24,6 +24,7 @@ export class PatientsController {
   }
 
   @Patch(':id')
+   @UsePipes(ValidationPipe)
   update(@Param('id',ParseIntPipe) id: number, @Body() updatePatientDto: UpdatePatientDto) {
     return this.patientsService.update(id, updatePatientDto);
   }

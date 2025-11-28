@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, ValidationPipe, UsePipes } from '@nestjs/common';
 import { DoctorService } from './doctor.service';
 import { CreateDoctorDto } from './dto/create-doctor.dto';
 import { UpdateDoctorDto } from './dto/update-doctor.dto';
@@ -8,6 +8,7 @@ export class DoctorController {
   constructor(private readonly doctorService: DoctorService) {}
 
   @Post()
+  @UsePipes(ValidationPipe)
   create(@Body() createDoctorDto: CreateDoctorDto) {
     return this.doctorService.create(createDoctorDto);
   }
@@ -23,6 +24,7 @@ export class DoctorController {
   }
 
   @Patch(':id')
+  @UsePipes(ValidationPipe)
   update(@Param('id',ParseIntPipe) id: number, @Body() updateDoctorDto: UpdateDoctorDto) {
     return this.doctorService.update(id, updateDoctorDto);
   }

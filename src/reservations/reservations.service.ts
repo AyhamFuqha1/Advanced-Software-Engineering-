@@ -9,39 +9,45 @@ import { Repository } from 'typeorm';
 export class ReservationsService {
   constructor(
     @InjectRepository(Reservation)
-    private readonly doctorsRepository: Repository<Reservation>,
-  ){}
+    private readonly reservationRepository: Repository<Reservation>,
+  ) {}
   async create(createReservationDto: CreateReservationDto) {
-    const res=await this.doctorsRepository.create(createReservationDto);
-    return this.doctorsRepository.save(res);
+    const res = await this.reservationRepository.create(createReservationDto);
+    return this.reservationRepository.save(res);
   }
 
   findAll() {
-    return this.doctorsRepository.find();
+    return this.reservationRepository.find();
   }
 
   async findOne(id: number) {
-    const res=await this.doctorsRepository.findOne({where:{reservation_id:id}})
-    if(!res){
-       return `not found`;
+    const res = await this.reservationRepository.findOne({
+      where: { reservation_id: id },
+    });
+    if (!res) {
+      return `not found`;
     }
-    return this.doctorsRepository.save(res);
+    return this.reservationRepository.save(res);
   }
 
   async update(id: number, updateReservationDto: UpdateReservationDto) {
-    const res=await this.doctorsRepository.findOne({where:{reservation_id:id}})
-    if(!res){
+    const res = await this.reservationRepository.findOne({
+      where: { reservation_id: id },
+    });
+    if (!res) {
       throw new NotFoundException();
     }
-    Object.assign(res,this.update);
-    return this.doctorsRepository.save(res);
+    Object.assign(res, updateReservationDto);
+    return this.reservationRepository.save(res);
   }
 
- async remove(id: number) {
-  const res=await this.doctorsRepository.findOne({where:{reservation_id:id}})
-    if(!res){
-       throw new NotFoundException();
+  async remove(id: number) {
+    const res = await this.reservationRepository.findOne({
+      where: { reservation_id: id },
+    });
+    if (!res) {
+      throw new NotFoundException();
     }
-    return this.doctorsRepository.delete(res);
+    return this.reservationRepository.delete(res);
   }
 }

@@ -1,11 +1,11 @@
-import { Column, PrimaryGeneratedColumn } from "typeorm"
-
+import { Column, PrimaryGeneratedColumn,Entity } from "typeorm"
+@Entity('reservations') 
 export class Reservation {
   @PrimaryGeneratedColumn()
   reservation_id:number
    
   @Column()
-  doctor_id
+  doctor_id:number
 
   @Column()
   patient_id:number
@@ -14,8 +14,10 @@ export class Reservation {
   date_time:Date;
 
   @Column()
-  communication_way:string
-
+  communication_way:string 
+  
+  @Column()
+  medical_condition:string
 
     	
 }
