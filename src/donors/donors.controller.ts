@@ -1,7 +1,18 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { DonorsService } from './donors.service';
 import { CreateDonorDto } from './dto/create-donor.dto';
 import { UpdateDonorDto } from './dto/update-donor.dto';
+import { CreateDonationDto, CreateDonationDtoNonDoners } from './dto/create-donation';
+import { CreateInventor_nonid, CreateInventorDto } from 'src/inventors/dto/create-inventor.dto';
 
 @Controller('donors')
 export class DonorsController {
@@ -31,4 +42,16 @@ export class DonorsController {
   remove(@Param('id') id: string) {
     return this.donorsService.remove(+id);
   }
+
+  @Post(':id/inventors')
+  creatInventors(@Param('id')  id,createInventorDto:CreateInventor_nonid){
+     return this.donorsService.createInventors(id,createInventorDto);
+  } 
+
+   @Post(':id/donation')
+  creatDonation (@Param('id')  id,createDonationDtoNonDoners:CreateDonationDtoNonDoners){
+     return this.donorsService.createDonation(id,createDonationDtoNonDoners);
+  } 
+
+
 }

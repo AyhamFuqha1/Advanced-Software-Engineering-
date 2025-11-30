@@ -4,12 +4,16 @@ import { UpdatePatientDto } from './dto/update-patient.dto';
 import { Repository } from 'typeorm';
 import { Patients } from './patients.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { CreateRequestingMedicineDto, CreateRequestingMedicineNonIdDto } from 'src/requesting_medicine/dto/create-requesting_medicine.dto';
+import { RequestingMedicineService } from 'src/requesting_medicine/requesting_medicine.service';
 
 @Injectable()
 export class PatientsService {
   constructor(
     @InjectRepository(Patients)
     private readonly patientsRepository: Repository<Patients>,
+
+    private requestingMedicineService:RequestingMedicineService 
   ) {}
 
   create(createPatientDto: CreatePatientDto) {
@@ -32,4 +36,7 @@ export class PatientsService {
   remove(id: number) {
     return this.patientsRepository.delete({patient_id:id});
   }
+
+  createRequsetMedicine(id:number,createRequestingMedicineNonIdDto:CreateRequestingMedicineNonIdDto){
+      return this.requestingMedicineService.create({...createRequestingMedicineNonIdDto,id_patient:id})  }
 }

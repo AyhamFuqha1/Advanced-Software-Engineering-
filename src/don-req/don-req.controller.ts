@@ -45,4 +45,9 @@ export class DonReqController {
   remove(@Param('id') id: number) {
     return this.donReqService.remove(id);
   }
+
+  @Get('dashbard/:id')
+  getDashboard(@Param('id', ParseIntPipe) id) {
+    return this.donReqService.getDashboard(id);
+  }
 }

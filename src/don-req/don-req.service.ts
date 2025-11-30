@@ -4,12 +4,15 @@ import { UpdateDonReqDto } from './dto/update-don-req.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DonReq } from './entities/don-req.entity';
 import { Repository } from 'typeorm';
+import { Patient } from 'src/patients/entities/patient.entity';
 
 @Injectable()
 export class DonReqService {
   constructor(
     @InjectRepository(DonReq)
     private readonly donreqRepository: Repository<DonReq>,
+     @InjectRepository(Patient)
+        private readonly patientRepository: Repository<Patient>,
   ) {}
 
   async create(createDonReqDto: CreateDonReqDto) {
@@ -45,7 +48,7 @@ export class DonReqService {
     return await this.donreqRepository.save(updated);
   }
 
-  // DELETE
+  
   async remove(id: number) {
     const req = await this.donreqRepository.findOne({
       where: { id_request: id },
@@ -56,5 +59,15 @@ export class DonReqService {
 
     await this.donreqRepository.delete(id);
     return { message: `Donation Request #${id} deleted successfully` };
+  }
+
+  async getDashboard(id: number) {
+    const patient = this.patientRepository.findOne({
+      where: { id_patient: id },
+    });
+    if (!patient) {
+      throw new NotFoundException();
+    }
+    return this.donreqRepository.find({ where: { id_patient: id } });
   }
 }

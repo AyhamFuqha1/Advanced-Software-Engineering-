@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, Valida
 import { DoctorService } from './doctor.service';
 import { CreateDoctorDto } from './dto/create-doctor.dto';
 import { UpdateDoctorDto } from './dto/update-doctor.dto';
+import { CreateHealthGuideDto, CreateHealthGuideDtoNonId } from 'src/health_guides/dto/create-health_guide.dto';
 
 @Controller('doctor')
 export class DoctorController {
@@ -32,5 +33,10 @@ export class DoctorController {
   @Delete(':id')
   remove(@Param('id',ParseIntPipe) id: number) {
     return this.doctorService.remove(id);
+  }
+
+  @Post(':id/healthguides')
+  createHealthGuides(@Param('id')id:number,@Body() createHealthGuideDtoNonId:CreateHealthGuideDtoNonId){
+    return this.doctorService.createHealthGuides(id,createHealthGuideDtoNonId);
   }
 }
