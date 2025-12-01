@@ -1,14 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import { CreateInventorDto, Inventory } from './dto/create-inventor.dto';
+import { CreateInventorDto} from './dto/create-inventor.dto';
 import { UpdateInventorDto } from './dto/update-inventor.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { Inventor } from './entities/inventor.entity';
 
 @Injectable()
 export class InventorsService {
   constructor(
-    @InjectRepository(Inventory)
-    private readonly inventoryRepo: Repository<Inventory>,
+    @InjectRepository(Inventor)
+    private readonly inventoryRepo: Repository<Inventor>,
   ) {}
 
   create(createInventoryDto: CreateInventorDto) {

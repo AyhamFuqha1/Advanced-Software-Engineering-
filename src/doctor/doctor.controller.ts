@@ -39,4 +39,9 @@ export class DoctorController {
   createHealthGuides(@Param('id')id:number,@Body() createHealthGuideDtoNonId:CreateHealthGuideDtoNonId){
     return this.doctorService.createHealthGuides(id,createHealthGuideDtoNonId);
   }
+
+  @Post(':id/group/:id_group')
+  addToGroup(@Param('id')id:number,@Param('id_group')id_group:number){
+    return this.doctorService.addToGroup(id,id_group);
+  }
 }

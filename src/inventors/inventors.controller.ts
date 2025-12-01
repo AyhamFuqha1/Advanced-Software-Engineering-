@@ -1,4 +1,15 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UsePipes,
+  ValidationPipe,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { InventorsService } from './inventors.service';
 import { CreateInventorDto } from './dto/create-inventor.dto';
 import { UpdateInventorDto } from './dto/update-inventor.dto';
@@ -8,6 +19,7 @@ export class InventorsController {
   constructor(private readonly inventorsService: InventorsService) {}
 
   @Post('doners/:id')
+  @UsePipes(ValidationPipe)
   create(@Body() createInventorDto: CreateInventorDto) {
     return this.inventorsService.create(createInventorDto);
   }
@@ -18,19 +30,23 @@ export class InventorsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.inventorsService.findOne(+id);
+  @UsePipes(ValidationPipe)
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.inventorsService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateInventorDto: UpdateInventorDto) {
-    return this.inventorsService.update(+id, updateInventorDto);
+  @UsePipes(ValidationPipe)
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateInventorDto: UpdateInventorDto,
+  ) {
+    return this.inventorsService.update(id, updateInventorDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.inventorsService.remove(+id);
+  @UsePipes(ValidationPipe)
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.inventorsService.remove(id);
   }
-
-  
 }

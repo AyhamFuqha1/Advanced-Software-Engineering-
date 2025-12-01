@@ -2,8 +2,8 @@
 export class CreateInventorDto {}
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity()
-export class Inventory {
+@Entity('inventor')
+export class Inventor {
 
   @PrimaryGeneratedColumn()
   id_item: number;

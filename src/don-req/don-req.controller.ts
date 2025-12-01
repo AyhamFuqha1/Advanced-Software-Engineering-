@@ -42,7 +42,7 @@ export class DonReqController {
 
   @Delete(':id')
   @UsePipes(ValidationPipe)
-  remove(@Param('id') id: number) {
+  remove(@Param('id',ParseIntPipe) id: number) {
     return this.donReqService.remove(id);
   }
 

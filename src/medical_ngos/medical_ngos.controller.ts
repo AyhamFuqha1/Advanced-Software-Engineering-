@@ -6,6 +6,9 @@ import {
   Patch,
   Param,
   Delete,
+  ParseIntPipe,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { MedicalNgosService } from './medical_ngos.service';
 import { CreateMedicalNgoDto } from './dto/create-medical_ngo.dto';
@@ -18,6 +21,7 @@ export class MedicalNgosController {
   constructor(private readonly medicalNgosService: MedicalNgosService) {}
 
   @Post()
+  @UsePipes(ValidationPipe)
   create(@Body() createMedicalNgoDto: CreateMedicalNgoDto) {
     return this.medicalNgosService.create(createMedicalNgoDto);
   }
@@ -28,30 +32,44 @@ export class MedicalNgosController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id', ParseIntPipe) id: string) {
     return this.medicalNgosService.findOne(+id);
   }
 
   @Patch(':id')
+  @UsePipes(ValidationPipe)
   update(
-    @Param('id') id: string,
+    @Param('id', ParseIntPipe) id: number,
     @Body() updateMedicalNgoDto: UpdateMedicalNgoDto,
   ) {
-    return this.medicalNgosService.update(+id, updateMedicalNgoDto);
+    return this.medicalNgosService.update(id, updateMedicalNgoDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.medicalNgosService.remove(+id);
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.medicalNgosService.remove(id);
   }
 
   @Post(':id/healthalert')
-  createHealthAlert( @Param('id') id: number, @Body() createHealthAlertDtoNonMecical:CreateHealthAlertDtoNonMecical) {
-    return this.medicalNgosService.createHealthAlert(id, createHealthAlertDtoNonMecical);
+  @UsePipes(ValidationPipe)
+  createHealthAlert(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() createHealthAlertDtoNonMecical: CreateHealthAlertDtoNonMecical,
+  ) {
+    return this.medicalNgosService.createHealthAlert(
+      id,
+      createHealthAlertDtoNonMecical,
+    );
   }
 
   @Post(':id/workshops')
-  createWorkShop( @Param('id') id: number, @Body() createWorkshopDtoNonMedical:CreateWorkshopDtoNonMedical) {
-    return this.medicalNgosService.createWorkShop(id, createWorkshopDtoNonMedical);
+  createWorkShop(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() createWorkshopDtoNonMedical: CreateWorkshopDtoNonMedical,
+  ) {
+    return this.medicalNgosService.createWorkShop(
+      id,
+      createWorkshopDtoNonMedical,
+    );
   }
 }

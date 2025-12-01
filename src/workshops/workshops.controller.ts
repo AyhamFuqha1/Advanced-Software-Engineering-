@@ -1,4 +1,15 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  ParseIntPipe,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { WorkshopsService } from './workshops.service';
 import { CreateWorkshopDto } from './dto/create-workshop.dto';
 import { UpdateWorkshopDto } from './dto/update-workshop.dto';
@@ -8,6 +19,7 @@ export class WorkshopsController {
   constructor(private readonly workshopsService: WorkshopsService) {}
 
   @Post()
+  @UsePipes(ValidationPipe)
   create(@Body() createWorkshopDto: CreateWorkshopDto) {
     return this.workshopsService.create(createWorkshopDto);
   }
@@ -18,17 +30,21 @@ export class WorkshopsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.workshopsService.findOne(+id);
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.workshopsService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateWorkshopDto: UpdateWorkshopDto) {
-    return this.workshopsService.update(+id, updateWorkshopDto);
+  @UsePipes(ValidationPipe)
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateWorkshopDto: UpdateWorkshopDto,
+  ) {
+    return this.workshopsService.update(id, updateWorkshopDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.workshopsService.remove(+id);
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.workshopsService.remove(id);
   }
 }

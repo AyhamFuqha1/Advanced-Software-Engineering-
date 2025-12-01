@@ -6,13 +6,15 @@ import { Doctor } from './entities/doctor.entity';
 import { Repository } from 'typeorm';
 import { CreateHealthGuideDtoNonId } from 'src/health_guides/dto/create-health_guide.dto';
 import { HealthGuidesService } from 'src/health_guides/health_guides.service';
+import { GroupDoctor } from './entities/doctor_member.entity';
 
 @Injectable()
 export class DoctorService {
   constructor(
     @InjectRepository(Doctor)
     private readonly doctorsRepository: Repository<Doctor>,
-
+    @InjectRepository(Doctor)
+    private readonly groupDoctorsRepository: Repository<GroupDoctor>,
     private healthGuide:HealthGuidesService
   ) {}
   create(createDoctorDto: CreateDoctorDto) {
@@ -52,5 +54,9 @@ export class DoctorService {
     createHealthGuideDtoNonId: CreateHealthGuideDtoNonId,
   ) {
       return this.healthGuide.create({...createHealthGuideDtoNonId,doctor_id:id})
+  }
+
+  addToGroup(id:number,id_group:number){
+    this.groupDoctorsRepository.create({doctor_id:id,group_id:id})
   }
 }

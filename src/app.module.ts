@@ -23,6 +23,8 @@ import { MedicalNgosModule } from './medical_ngos/medical_ngos.module';
 import { RequestingMedicine } from './requesting_medicine/entities/requesting_medicine.entity';
 import { HealthGuidesModule } from './health_guides/health_guides.module';
 import { HealthAlertsModule } from './health_alerts/health_alerts.module';
+import { AnonymousTherapyChatsModule } from './anonymous_therapy_chats/anonymous_therapy_chats.module';
+import { SupportGroupsModule } from './support_groups/support_groups.module';
 @Module({
   imports: [
     DoctorModule,
@@ -47,6 +49,8 @@ import { HealthAlertsModule } from './health_alerts/health_alerts.module';
     MedicalNgosModule,
     HealthGuidesModule,
     HealthAlertsModule,
+    AnonymousTherapyChatsModule,
+    SupportGroupsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
