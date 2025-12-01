@@ -6,6 +6,7 @@ import { Inventor } from './entities/inventor.entity';
 
 @Module({
   imports:[TypeOrmModule.forFeature([Inventor])],
+   exports: [InventorsService],
   controllers: [InventorsController],
   providers: [InventorsService],
 })

@@ -26,7 +26,7 @@ export class DonReqService {
 
   async findOne(id: number) {
     const req = await this.donreqRepository.findOne({
-      where: { id_request: id },
+      where: { request_id: id },
     });
 
     if (!req) {
@@ -38,7 +38,7 @@ export class DonReqService {
 
   async update(id: number, updateDonReqDto: UpdateDonReqDto) {
     const req = await this.donreqRepository.findOne({
-      where: { id_request: id },
+      where: { request_id: id },
     });
     if (!req) {
       throw new NotFoundException(`Donation Request #${id} not found`);
@@ -51,7 +51,7 @@ export class DonReqService {
   
   async remove(id: number) {
     const req = await this.donreqRepository.findOne({
-      where: { id_request: id },
+      where: { request_id: id },
     });
     if (!req) {
       throw new NotFoundException(`Donation Request #${id} not found`);
@@ -63,11 +63,11 @@ export class DonReqService {
 
   async getDashboard(id: number) {
     const patient = this.patientRepository.findOne({
-      where: { id_patient: id },
+      where: { patient_id: id },
     });
     if (!patient) {
       throw new NotFoundException();
     }
-    return this.donreqRepository.find({ where: { id_patient: id } });
+    return this.donreqRepository.find({ where: { patient_id: id } });
   }
 }

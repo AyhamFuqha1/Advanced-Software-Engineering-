@@ -13,7 +13,7 @@ export class DoctorService {
   constructor(
     @InjectRepository(Doctor)
     private readonly doctorsRepository: Repository<Doctor>,
-    @InjectRepository(Doctor)
+    @InjectRepository(GroupDoctor)
     private readonly groupDoctorsRepository: Repository<GroupDoctor>,
     private healthGuide:HealthGuidesService
   ) {}

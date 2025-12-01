@@ -2,11 +2,11 @@ import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity('donation')  
 export class Donation {
-  @Column()
+  @PrimaryGeneratedColumn()
   id_donation: number;
 
   @Column()
-  id_donation_request: number | null;
+  id_donation_request: number ;
 
   @Column()
   id_donors: number;

@@ -7,6 +7,7 @@ import { HealthAlert } from './entities/health_alert.entity';
 @Module({
   imports:[TypeOrmModule.forFeature([HealthAlert])],
   controllers: [HealthAlertsController],
+    exports: [HealthAlertsService],
   providers: [HealthAlertsService],
 })
 export class HealthAlertsModule {}

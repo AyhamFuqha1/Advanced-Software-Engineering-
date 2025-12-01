@@ -6,6 +6,7 @@ import { Workshop } from './entities/workshop.entity';
 
 @Module({
   imports:[TypeOrmModule.forFeature([Workshop])],
+  exports:[WorkshopsService],
   controllers: [WorkshopsController],
   providers: [WorkshopsService],
 })

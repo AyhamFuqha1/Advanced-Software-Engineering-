@@ -6,6 +6,7 @@ import { AnonymousTherapyChat } from './entities/anonymous_therapy_chat.entity';
 
 @Module({
   imports:[TypeOrmModule.forFeature([AnonymousTherapyChat])],
+  exports:[AnonymousTherapyChatsService],
   controllers: [AnonymousTherapyChatsController],
   providers: [AnonymousTherapyChatsService],
 })
