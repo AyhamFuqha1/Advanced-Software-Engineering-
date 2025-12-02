@@ -1,13 +1,15 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, ValidationPipe, UsePipes } from '@nestjs/common';
 import { DoctorService } from './doctor.service';
 import { CreateDoctorDto } from './dto/create-doctor.dto';
 import { UpdateDoctorDto } from './dto/update-doctor.dto';
+import { CreateHealthGuideDto, CreateHealthGuideDtoNonId } from 'src/health_guides/dto/create-health_guide.dto';
 
 @Controller('doctor')
 export class DoctorController {
   constructor(private readonly doctorService: DoctorService) {}
 
   @Post()
+  @UsePipes(ValidationPipe)
   create(@Body() createDoctorDto: CreateDoctorDto) {
     return this.doctorService.create(createDoctorDto);
   }
@@ -18,17 +20,28 @@ export class DoctorController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.doctorService.findOne(+id);
+  findOne(@Param('id',ParseIntPipe) id: number) {
+    return this.doctorService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateDoctorDto: UpdateDoctorDto) {
-    return this.doctorService.update(+id, updateDoctorDto);
+  @UsePipes(ValidationPipe)
+  update(@Param('id',ParseIntPipe) id: number, @Body() updateDoctorDto: UpdateDoctorDto) {
+    return this.doctorService.update(id, updateDoctorDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.doctorService.remove(+id);
+  remove(@Param('id',ParseIntPipe) id: number) {
+    return this.doctorService.remove(id);
+  }
+
+  @Post(':id/healthguides')
+  createHealthGuides(@Param('id')id:number,@Body() createHealthGuideDtoNonId:CreateHealthGuideDtoNonId){
+    return this.doctorService.createHealthGuides(id,createHealthGuideDtoNonId);
+  }
+
+  @Post(':id/group/:id_group')
+  addToGroup(@Param('id')id:number,@Param('id_group')id_group:number){
+    return this.doctorService.addToGroup(id,id_group);
   }
 }
