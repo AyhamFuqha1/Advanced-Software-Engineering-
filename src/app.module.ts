@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DoctorModule } from './doctor/doctor.module';
@@ -25,7 +25,11 @@ import { HealthGuidesModule } from './health_guides/health_guides.module';
 import { HealthAlertsModule } from './health_alerts/health_alerts.module';
 import { AnonymousTherapyChatsModule } from './anonymous_therapy_chats/anonymous_therapy_chats.module';
 import { SupportGroupsModule } from './support_groups/support_groups.module';
-import { UserModule } from './user/user.module';
+import { LoginModule } from './login/login.module';
+import { Login } from './login/entities/login.entity';
+import { SupportGroup } from './support_groups/entities/support_group.entity';
+import { AuthMiddleware } from './auth/auth.middleware';
+
 @Module({
   imports: [
     DoctorModule,
@@ -39,7 +43,7 @@ import { UserModule } from './user/user.module';
       port:3306,
       host:'localhost',
       synchronize:false,
-      entities:[Patients,Doctor,Reservation,Translation,DonReq,Donor,Donation,Workshop,RequestingMedicine]
+      entities:[Patients,Doctor,Reservation,Translation,DonReq,Donor,Donation,Workshop,RequestingMedicine,Login,SupportGroup]
     }),
     TranslationsModule,
     DonReqModule,
@@ -52,10 +56,18 @@ import { UserModule } from './user/user.module';
     HealthAlertsModule,
     AnonymousTherapyChatsModule,
     SupportGroupsModule,
-    UserModule,
+    LoginModule 
   ],
   controllers: [AppController],
   providers: [AppService],
  
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(AuthMiddleware)
+      .forRoutes(
+        { path: 'doctor', method: RequestMethod.ALL }, // شغل middleware على كل doctor routes
+      );
+  }
+}

@@ -16,7 +16,6 @@ export class CreateReservationDto {
 export class CreateReservationDtoNonid {
   @IsNotEmpty()
   doctor_id: number;
-  
   @IsNotEmpty()
   date_time: string;
   @IsNotEmpty()
