@@ -1,15 +1,15 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
-@Entity('donation_request') 
+@Entity('donation_requests')
 export class DonReq {
   @PrimaryGeneratedColumn()
-  id_request: number;
+  request_id: number;
 
   @Column()
-  id_doners: number;
+  donor_id: number;
 
   @Column()
-  id_patient: number;
+  patient_id: number;
 
   @Column()
   purpose: string;

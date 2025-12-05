@@ -1,7 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, ValidationPipe, UsePipes } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, ValidationPipe, UsePipes, UseGuards } from '@nestjs/common';
 import { DoctorService } from './doctor.service';
 import { CreateDoctorDto } from './dto/create-doctor.dto';
 import { UpdateDoctorDto } from './dto/update-doctor.dto';
+import { CreateHealthGuideDto, CreateHealthGuideDtoNonId } from 'src/health_guides/dto/create-health_guide.dto';
+import { AuthGuard } from 'src/guards/auth/auth.guard';
+import { Roles } from 'src/decorators/roles/roles.decorator';
+import { RolesGuard } from 'src/guards/auth/roles/roles.guard';
 
 @Controller('doctor')
 export class DoctorController {
@@ -14,6 +18,8 @@ export class DoctorController {
   }
 
   @Get()
+  @UseGuards(AuthGuard,RolesGuard)
+  @Roles(['admin'])
   findAll() {
     return this.doctorService.findAll();
   }
@@ -32,5 +38,15 @@ export class DoctorController {
   @Delete(':id')
   remove(@Param('id',ParseIntPipe) id: number) {
     return this.doctorService.remove(id);
+  }
+
+  @Post(':id/healthguides')
+  createHealthGuides(@Param('id')id:number,@Body() createHealthGuideDtoNonId:CreateHealthGuideDtoNonId){
+    return this.doctorService.createHealthGuides(id,createHealthGuideDtoNonId);
+  }
+
+  @Post(':id/group/:id_group')
+  addToGroup(@Param('id')id:number,@Param('id_group')id_group:number){
+    return this.doctorService.addToGroup(id,id_group);
   }
 }
