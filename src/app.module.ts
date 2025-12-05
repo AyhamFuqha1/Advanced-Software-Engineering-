@@ -31,6 +31,13 @@ import { HealthAlert } from './health_alerts/entities/health_alert.entity';
 import { MedicalNgo } from './medical_ngos/entities/medical_ngo.entity';
 import { HealthGuide } from './health_guides/entities/health_guide.entity';
 import { Inventor } from './inventors/entities/inventor.entity';
+import { AuthMiddleware } from './middleware/auth.middleware';
+import { Login } from './login/entities/login.entity';
+import { LoginModule } from './login/login.module';
+import { VolunteerDoctorsModule } from './volunteer-doctors/volunteer-doctors.module';
+import { VolunteerDoctor } from './volunteer-doctors/entities/volunteer-doctor.entity';
+import { MedicalMissionsModule } from './medical-missions/medical-missions.module';
+import { MedicalMission } from './medical-missions/entities/medical-mission.entity';
 
 @Module({
   imports: [
@@ -45,7 +52,7 @@ import { Inventor } from './inventors/entities/inventor.entity';
       port:3306,
       host:'localhost',
       synchronize:false,
-      entities:[Patients,Doctor,Reservation,Translation,DonReq,Donor,Donation,Workshop,RequestingMedicine,SupportGroup,AnonymousTherapyChat,HealthAlert,MedicalNgo,HealthGuide,Inventor]
+      entities:[Patients,Doctor,Reservation,Translation,DonReq,Donor,Donation,Workshop,RequestingMedicine,SupportGroup,AnonymousTherapyChat,HealthAlert,MedicalNgo,HealthGuide,Inventor,Login,VolunteerDoctor,MedicalMission]
     }),
     TranslationsModule,
     DonReqModule,
@@ -58,6 +65,9 @@ import { Inventor } from './inventors/entities/inventor.entity';
     HealthAlertsModule,
     AnonymousTherapyChatsModule,
     SupportGroupsModule,
+    LoginModule,
+    VolunteerDoctorsModule,
+    MedicalMissionsModule
   ],
   controllers: [AppController],
   providers: [AppService],
@@ -68,7 +78,8 @@ export class AppModule {
     consumer
       .apply(AuthMiddleware)
       .forRoutes(
-        { path: 'doctor', method: RequestMethod.ALL }, // شغل middleware على كل doctor routes
+        { path: 'doctor', method: RequestMethod.ALL },
+        //{path:'patients' , method:RequestMethod.ALL} 
       );
   }
 }
