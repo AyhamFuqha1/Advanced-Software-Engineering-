@@ -15,7 +15,7 @@ export class Login {
   passward:string;
 
   @Column()
-  type:'admin'|'user';
+  type:'patient'|'doctor'| 'donor'|'admin';
 
 
 }

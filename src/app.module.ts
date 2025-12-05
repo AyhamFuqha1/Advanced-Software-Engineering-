@@ -48,7 +48,7 @@ import { MedicalMission } from './medical-missions/entities/medical-mission.enti
       type: 'mysql',
       database:"healthpal",
       username:"root",
-      password:"momoali2003",
+      password:"",
       port:3306,
       host:'localhost',
       synchronize:false,
@@ -68,6 +68,7 @@ import { MedicalMission } from './medical-missions/entities/medical-mission.enti
     LoginModule,
     VolunteerDoctorsModule,
     MedicalMissionsModule
+    LoginModule
   ],
   controllers: [AppController],
   providers: [AppService],
@@ -79,7 +80,20 @@ export class AppModule {
       .apply(AuthMiddleware)
       .forRoutes(
         { path: 'doctor', method: RequestMethod.ALL },
-        //{path:'patients' , method:RequestMethod.ALL} 
+        {path:'patients' , method:RequestMethod.ALL}, 
+        {path:'anonymous-therapy-chats' , method:RequestMethod.ALL}, 
+        {path:'donation_requests' , method:RequestMethod.ALL}, 
+        {path:'donors' , method:RequestMethod.ALL}, 
+        {path:'health_alerts' , method:RequestMethod.ALL}, 
+        {path:'health_guides' , method:RequestMethod.ALL}, 
+        {path:'inventor' , method:RequestMethod.ALL}, 
+        {path:'login' , method:RequestMethod.ALL}, 
+        {path:'medical-ngos' , method:RequestMethod.ALL}, 
+        {path:'requesting_medicine' , method:RequestMethod.ALL}, 
+        {path:'reservations' , method:RequestMethod.ALL}, 
+        {path:'support_groups' , method:RequestMethod.ALL}, 
+        {path:'workshops' , method:RequestMethod.ALL}, 
+        
       );
   }
 }
