@@ -14,8 +14,8 @@ export class CreateLoginDto {
   passward: string;
 
   @IsNotEmpty()
-  @IsIn(['admin', 'user'])
-  type: 'admin' | 'user';
+  @IsIn(['patient', 'doctor','donor','admin'])
+  type: 'patient'|'doctor'| 'donor'|'admin';
 }
 
 export class LoginDto {

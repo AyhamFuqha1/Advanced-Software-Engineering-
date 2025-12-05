@@ -6,6 +6,8 @@ import {
   Patch,
   Param,
   Delete,
+  ValidationPipe,
+  UsePipes,
 } from '@nestjs/common';
 import { LoginService } from './login.service';
 import { CreateLoginDto, LoginDto } from './dto/create-login.dto';
@@ -16,11 +18,14 @@ export class LoginController {
   constructor(private readonly loginService: LoginService) {}
 
   @Post('create')
+    @UsePipes(ValidationPipe)
   create(@Body() createLoginDto: CreateLoginDto) {
     return this.loginService.create(createLoginDto);
   }
 
   @Post()
+  @UsePipes(ValidationPipe)
+
   login(@Body() loginDto: LoginDto) {
     return this.loginService.login(loginDto);
   }
@@ -37,6 +42,8 @@ export class LoginController {
   }
 
   @Patch(':id')
+  @UsePipes(ValidationPipe)
+
   update(@Param('id') id: string, @Body() updateLoginDto: UpdateLoginDto) {
     return this.loginService.update(+id, updateLoginDto);
   }
