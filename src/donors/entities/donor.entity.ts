@@ -1,13 +1,13 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
-@Entity('donors')   // لازم يكون نفس اسم الجدول فعلياً
+@Entity('donors')
 export class Donor {
-  @PrimaryGeneratedColumn()
-  id_donors: number;
+  @PrimaryGeneratedColumn({ name: 'donor_id' })
+  donor_id: number;
 
-  @Column()
+  @Column({ name: 'full_name' })
   full_name: string;
 
-  @Column('float')
-  total_donated: number;
+  @Column({ name: 'last_donated', type: 'float' })
+  last_donated: number;
 }

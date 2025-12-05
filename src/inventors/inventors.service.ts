@@ -22,7 +22,7 @@ export class InventorsService {
   }
 
   findOne(id: number) {
-    return this.inventoryRepo.findOne({ where: { id_item: id } });
+    return this.inventoryRepo.findOne({ where: { item_id: id } });
   }
 
   update(id: number, updateInventoryDto: UpdateInventorDto) {

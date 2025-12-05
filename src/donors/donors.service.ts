@@ -31,7 +31,7 @@ export class DonorsService {
 
   async findOne(id: number) {
     const donor = await this.donorsRepository.findOne({
-      where: { id_donors: id },
+      where: { donor_id: id },
     });
 
     if (!donor) {
@@ -57,7 +57,7 @@ export class DonorsService {
 
 
   createInventors(id,createInventorDto:CreateInventor_nonid){
-     return this.inventoryService.create({...createInventorDto,id_doners:id});
+     return this.inventoryService.create({...createInventorDto,medical_id:id});
   }
 
   async createDonation(id:number,createDonationDtoNonDoners: CreateDonationDtoNonDoners) {
@@ -65,7 +65,7 @@ export class DonorsService {
     if(!found){
       throw new NotFoundException();
     }
-    const newDonation = await this.donationRepository.create({...CreateDonationDtoNonDoners,id_donation:id});
+    const newDonation = await this.donationRepository.create({...createDonationDtoNonDoners, donor_id: id});
     return this.donationRepository.save(newDonation);
   }
 

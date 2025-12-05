@@ -25,10 +25,12 @@ import { HealthGuidesModule } from './health_guides/health_guides.module';
 import { HealthAlertsModule } from './health_alerts/health_alerts.module';
 import { AnonymousTherapyChatsModule } from './anonymous_therapy_chats/anonymous_therapy_chats.module';
 import { SupportGroupsModule } from './support_groups/support_groups.module';
-import { LoginModule } from './login/login.module';
-import { Login } from './login/entities/login.entity';
 import { SupportGroup } from './support_groups/entities/support_group.entity';
-import { AuthMiddleware } from './middleware/auth.middleware';
+import { AnonymousTherapyChat } from './anonymous_therapy_chats/entities/anonymous_therapy_chat.entity';
+import { HealthAlert } from './health_alerts/entities/health_alert.entity';
+import { MedicalNgo } from './medical_ngos/entities/medical_ngo.entity';
+import { HealthGuide } from './health_guides/entities/health_guide.entity';
+import { Inventor } from './inventors/entities/inventor.entity';
 
 @Module({
   imports: [
@@ -39,11 +41,11 @@ import { AuthMiddleware } from './middleware/auth.middleware';
       type: 'mysql',
       database:"healthpal",
       username:"root",
-      password:"",
+      password:"momoali2003",
       port:3306,
       host:'localhost',
       synchronize:false,
-      entities:[Patients,Doctor,Reservation,Translation,DonReq,Donor,Donation,Workshop,RequestingMedicine,Login,SupportGroup]
+      entities:[Patients,Doctor,Reservation,Translation,DonReq,Donor,Donation,Workshop,RequestingMedicine,SupportGroup,AnonymousTherapyChat,HealthAlert,MedicalNgo,HealthGuide,Inventor]
     }),
     TranslationsModule,
     DonReqModule,
@@ -56,7 +58,6 @@ import { AuthMiddleware } from './middleware/auth.middleware';
     HealthAlertsModule,
     AnonymousTherapyChatsModule,
     SupportGroupsModule,
-    LoginModule 
   ],
   controllers: [AppController],
   providers: [AppService],

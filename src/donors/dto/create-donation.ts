@@ -1,15 +1,16 @@
-import { isNotEmpty, IsNotEmpty } from 'class-validator';
+import { IsNotEmpty, IsInt, IsNumber } from 'class-validator';
 
 export class CreateDonationDto {
   @IsNotEmpty()
-  id_donation_request: number | null;
+  donation_request_id: number;
 
   @IsNotEmpty()
-  id_donors: number;
+  donor_id: number;
 
   @IsNotEmpty()
   total_donated: number;
 }
+
 
 export class CreateDonationDtoNonDoners {
   @IsNotEmpty()
