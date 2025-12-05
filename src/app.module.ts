@@ -31,6 +31,9 @@ import { HealthAlert } from './health_alerts/entities/health_alert.entity';
 import { MedicalNgo } from './medical_ngos/entities/medical_ngo.entity';
 import { HealthGuide } from './health_guides/entities/health_guide.entity';
 import { Inventor } from './inventors/entities/inventor.entity';
+import { AuthMiddleware } from './middleware/auth.middleware';
+import { Login } from './login/entities/login.entity';
+import { LoginModule } from './login/login.module';
 
 @Module({
   imports: [
@@ -41,11 +44,11 @@ import { Inventor } from './inventors/entities/inventor.entity';
       type: 'mysql',
       database:"healthpal",
       username:"root",
-      password:"momoali2003",
+      password:"",
       port:3306,
       host:'localhost',
       synchronize:false,
-      entities:[Patients,Doctor,Reservation,Translation,DonReq,Donor,Donation,Workshop,RequestingMedicine,SupportGroup,AnonymousTherapyChat,HealthAlert,MedicalNgo,HealthGuide,Inventor]
+      entities:[Patients,Doctor,Reservation,Translation,DonReq,Donor,Donation,Workshop,RequestingMedicine,SupportGroup,AnonymousTherapyChat,HealthAlert,MedicalNgo,HealthGuide,Inventor,Login]
     }),
     TranslationsModule,
     DonReqModule,
@@ -58,6 +61,7 @@ import { Inventor } from './inventors/entities/inventor.entity';
     HealthAlertsModule,
     AnonymousTherapyChatsModule,
     SupportGroupsModule,
+    LoginModule
   ],
   controllers: [AppController],
   providers: [AppService],
@@ -68,7 +72,21 @@ export class AppModule {
     consumer
       .apply(AuthMiddleware)
       .forRoutes(
-        { path: 'doctor', method: RequestMethod.ALL }, // شغل middleware على كل doctor routes
+        { path: 'doctor', method: RequestMethod.ALL },
+        {path:'patients' , method:RequestMethod.ALL}, 
+        {path:'anonymous-therapy-chats' , method:RequestMethod.ALL}, 
+        {path:'donation_requests' , method:RequestMethod.ALL}, 
+        {path:'donors' , method:RequestMethod.ALL}, 
+        {path:'health_alerts' , method:RequestMethod.ALL}, 
+        {path:'health_guides' , method:RequestMethod.ALL}, 
+        {path:'inventor' , method:RequestMethod.ALL}, 
+        {path:'login' , method:RequestMethod.ALL}, 
+        {path:'medical-ngos' , method:RequestMethod.ALL}, 
+        {path:'requesting_medicine' , method:RequestMethod.ALL}, 
+        {path:'reservations' , method:RequestMethod.ALL}, 
+        {path:'support_groups' , method:RequestMethod.ALL}, 
+        {path:'workshops' , method:RequestMethod.ALL}, 
+        
       );
   }
 }
