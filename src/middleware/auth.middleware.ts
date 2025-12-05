@@ -2,9 +2,6 @@ import { HttpStatus, Injectable, NestMiddleware } from '@nestjs/common';
 import { Request, Response } from 'express';
 import * as jwt from 'jsonwebtoken';
 export function AuthMiddleware(req: Request, res: Response, next: () => void) {
-   if (req.path === '/login') {
-    return next();
-  }
   const authHeader =req.headers.authorization;
   if (!authHeader) {
     return res
@@ -14,8 +11,8 @@ export function AuthMiddleware(req: Request, res: Response, next: () => void) {
   const token = authHeader.split(' ')[1];
 
   try {
-    const decoded = jwt.verify(token,"mySuperSecretKey123");
-    console.log(decoded);
+    const user = jwt.verify(token,"mySuperSecretKey123");
+    req['user']=user;
     next();
   } catch (err) {
     return res.status(403).json({ message: 'Invalid token' });

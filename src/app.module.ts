@@ -28,7 +28,7 @@ import { SupportGroupsModule } from './support_groups/support_groups.module';
 import { LoginModule } from './login/login.module';
 import { Login } from './login/entities/login.entity';
 import { SupportGroup } from './support_groups/entities/support_group.entity';
-import { AuthMiddleware } from './auth/auth.middleware';
+import { AuthMiddleware } from './middleware/auth.middleware';
 
 @Module({
   imports: [
