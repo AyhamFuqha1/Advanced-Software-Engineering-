@@ -1,8 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ParseIntPipe } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UsePipes,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { PatientsService } from './patients.service';
 import { CreatePatientDto } from './dto/create-patient.dto';
 import { UpdatePatientDto } from './dto/update-patient.dto';
-import { ValidationPipe} from '@nestjs/common';
+import { ValidationPipe } from '@nestjs/common';
+import { CreateRequestingMedicineNonIdDto } from 'src/requesting_medicine/dto/create-requesting_medicine.dto';
+import { CreateReservationDtoNonid } from 'src/reservations/dto/create-reservation.dto';
+import { CreateAnonymousTherapyChatDto } from 'src/anonymous_therapy_chats/dto/create-anonymous_therapy_chat.dto';
 @Controller('patients')
 export class PatientsController {
   constructor(private readonly patientsService: PatientsService) {}
@@ -19,18 +32,39 @@ export class PatientsController {
   }
 
   @Get(':id')
-  findOne(@Param('id',ParseIntPipe) id: number) {
+  findOne(@Param('id', ParseIntPipe) id: number) {
     return this.patientsService.findOne(id);
   }
 
   @Patch(':id')
-   @UsePipes(ValidationPipe)
-  update(@Param('id',ParseIntPipe) id: number, @Body() updatePatientDto: UpdatePatientDto) {
+  @UsePipes(ValidationPipe)
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updatePatientDto: UpdatePatientDto,
+  ) {
     return this.patientsService.update(id, updatePatientDto);
   }
 
   @Delete(':id')
-  remove(@Param('id',ParseIntPipe) id: number) {
+  remove(@Param('id', ParseIntPipe) id: number) {
     return this.patientsService.remove(id);
+  }
+  @Post(':id/reservation')
+  createreservation( @Param('id') id: number, @Body() createReservationDtoNonid: CreateReservationDtoNonid  ) {
+    return this.patientsService.createreservation(id,  createReservationDtoNonid,);
+  }
+
+  @Post(':id/requestMedicine')
+  createRequsetMedicine(@Param('id') id: number,@Body() createRequestingMedicineNonIdDto: CreateRequestingMedicineNonIdDto ) {
+    return this.patientsService.createRequsetMedicine( id,createRequestingMedicineNonIdDto);
+  }
+
+  @Post('requestMedicine')
+  createanonymous_therapy_chats(@Body() createAnonymousTherapyChatDto: CreateAnonymousTherapyChatDto ) {
+    return this.patientsService.createanonymous_therapy_chats( createAnonymousTherapyChatDto);
+  }
+  @Post(':id/group/:id_group')
+  addToGroup(@Param('id')id:number,@Param('id_group')id_group:number){
+         return this.patientsService.addToGroup(id,id_group);
   }
 }
