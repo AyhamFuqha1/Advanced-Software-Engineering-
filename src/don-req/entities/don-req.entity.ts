@@ -5,10 +5,10 @@ export class DonReq {
   @PrimaryGeneratedColumn()
   request_id: number;
 
-  @Column()
+  @Column({name:'donor_id'})
   donor_id: number;
 
-  @Column()
+  @Column({name:'patient_id'})
   patient_id: number;
 
   @Column()

@@ -18,11 +18,12 @@ import { UpdateInventorDto } from './dto/update-inventor.dto';
 export class InventorsController {
   constructor(private readonly inventorsService: InventorsService) {}
 
-  @Post('doners/:id')
-  @UsePipes(ValidationPipe)
-  create(@Body() createInventorDto: CreateInventorDto) {
-    return this.inventorsService.create(createInventorDto);
-  }
+ @Post()
+@UsePipes(ValidationPipe)
+create(@Body() createInventorDto: CreateInventorDto) {
+  return this.inventorsService.create(createInventorDto);
+}
+
 
   @Get()
   findAll() {

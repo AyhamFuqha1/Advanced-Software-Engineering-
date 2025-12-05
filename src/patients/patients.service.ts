@@ -72,8 +72,4 @@ export class PatientsService {
       return this.anonymous_therapy_chats.create(createAnonymousTherapyChatDto);
   }
 
- 
-  addToGroup(id:number,id_group:number){
-    return this.groupPatientsdRepository.create({patient_id:id,group_id:id_group})
-  }
 }
