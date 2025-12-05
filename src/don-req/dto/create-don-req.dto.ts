@@ -3,11 +3,11 @@ import { IsNotEmpty, IsString, IsNumber, IsInt } from 'class-validator';
 export class CreateDonReqDto {
   @IsInt()
   @IsNotEmpty()
-  id_doners: number;
+  donor_id: number;
 
   @IsInt()
   @IsNotEmpty()
-  id_patient: number;
+  patient_id: number;
 
   @IsString()
   @IsNotEmpty()

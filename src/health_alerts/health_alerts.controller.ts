@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe, ParseIntPipe } from '@nestjs/common';
+ import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe, ParseIntPipe } from '@nestjs/common';
 import { HealthAlertsService } from './health_alerts.service';
 import { CreateHealthAlertDto } from './dto/create-health_alert.dto';
 import { UpdateHealthAlertDto } from './dto/update-health_alert.dto';

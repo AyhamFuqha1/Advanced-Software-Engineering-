@@ -63,8 +63,5 @@ export class PatientsController {
   createanonymous_therapy_chats(@Body() createAnonymousTherapyChatDto: CreateAnonymousTherapyChatDto ) {
     return this.patientsService.createanonymous_therapy_chats( createAnonymousTherapyChatDto);
   }
-  @Post(':id/group/:id_group')
-  addToGroup(@Param('id')id:number,@Param('id_group')id_group:number){
-         return this.patientsService.addToGroup(id,id_group);
-  }
+  
 }
