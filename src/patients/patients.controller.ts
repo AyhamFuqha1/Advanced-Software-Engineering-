@@ -20,29 +20,34 @@ import { CreateAnonymousTherapyChatDto } from 'src/anonymous_therapy_chats/dto/c
 import { Roles } from 'src/decorators/roles/roles.decorator';
 import { AuthGuard } from 'src/guards/auth/auth.guard';
 import { RolesGuard } from 'src/guards/auth/roles/roles.guard';
+import { Role } from 'src/interfaces';
+
 @Controller('patients')
+@UseGuards(AuthGuard, RolesGuard)
 export class PatientsController {
   constructor(private readonly patientsService: PatientsService) {}
 
   @Post()
+  @Roles(Role.Admin)
   @UsePipes(ValidationPipe)
   create(@Body() createPatientDto: CreatePatientDto) {
     return this.patientsService.create(createPatientDto);
   }
 
   @Get()
-  @UseGuards(AuthGuard,RolesGuard)
-  @Roles(['admin'])
+  @Roles(Role.Admin)
   findAll() {
     return this.patientsService.findAll();
   }
 
   @Get(':id')
+  @Roles(Role.Admin, Role.Patient)
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.patientsService.findOne(id);
   }
 
   @Patch(':id')
+  @Roles(Role.Admin)
   @UsePipes(ValidationPipe)
   update(
     @Param('id', ParseIntPipe) id: number,
@@ -52,22 +57,42 @@ export class PatientsController {
   }
 
   @Delete(':id')
+  @Roles(Role.Admin)
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.patientsService.remove(id);
   }
+
   @Post(':id/reservation')
-  createreservation( @Param('id') id: number, @Body() createReservationDtoNonid: CreateReservationDtoNonid  ) {
-    return this.patientsService.createreservation(id,  createReservationDtoNonid,);
+  @Roles(Role.Patient, Role.Admin)
+  createreservation(
+    @Param('id') id: number,
+    @Body() createReservationDtoNonid: CreateReservationDtoNonid,
+  ) {
+    return this.patientsService.createreservation(
+      id,
+      createReservationDtoNonid,
+    );
   }
 
   @Post(':id/requestMedicine')
-  createRequsetMedicine(@Param('id') id: number,@Body() createRequestingMedicineNonIdDto: CreateRequestingMedicineNonIdDto ) {
-    return this.patientsService.createRequsetMedicine( id,createRequestingMedicineNonIdDto);
+  @Roles(Role.Patient, Role.Admin)
+  createRequsetMedicine(
+    @Param('id') id: number,
+    @Body() createRequestingMedicineNonIdDto: CreateRequestingMedicineNonIdDto,
+  ) {
+    return this.patientsService.createRequsetMedicine(
+      id,
+      createRequestingMedicineNonIdDto,
+    );
   }
 
   @Post('requestMedicine')
-  createanonymous_therapy_chats(@Body() createAnonymousTherapyChatDto: CreateAnonymousTherapyChatDto ) {
-    return this.patientsService.createanonymous_therapy_chats( createAnonymousTherapyChatDto);
+  @Roles(Role.Patient)
+  createanonymous_therapy_chats(
+    @Body() createAnonymousTherapyChatDto: CreateAnonymousTherapyChatDto,
+  ) {
+    return this.patientsService.createanonymous_therapy_chats(
+      createAnonymousTherapyChatDto,
+    );
   }
-  
 }

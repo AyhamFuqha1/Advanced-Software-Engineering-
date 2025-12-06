@@ -11,6 +11,7 @@ import {
   ValidationPipe,
   UseGuards,
 } from '@nestjs/common';
+
 import { DonorsService } from './donors.service';
 import { CreateDonorDto } from './dto/create-donor.dto';
 import { UpdateDonorDto } from './dto/update-donor.dto';
@@ -22,6 +23,7 @@ import {
   CreateInventor_nonid,
   CreateInventorDto,
 } from 'src/inventors/dto/create-inventor.dto';
+
 import { RolesGuard } from 'src/guards/auth/roles/roles.guard';
 import { AuthGuard } from 'src/guards/auth/auth.guard';
 import { Roles } from 'src/decorators/roles/roles.decorator';
@@ -34,25 +36,25 @@ export class DonorsController {
 
   @Post()
   @UsePipes(ValidationPipe)
-  @Roles([Role.Admin])
+  @Roles(Role.Admin)
   create(@Body() createDonorDto: CreateDonorDto) {
     return this.donorsService.create(createDonorDto);
   }
 
   @Get()
-  @Roles([Role.Admin])
+  @Roles(Role.Admin)
   findAll() {
     return this.donorsService.findAll();
   }
 
   @Get(':id')
-  @Roles([Role.Admin])
+  @Roles(Role.Admin)
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.donorsService.findOne(id);
   }
 
   @Patch(':id')
-  @Roles([Role.Admin])
+  @Roles(Role.Admin)
   @UsePipes(ValidationPipe)
   update(
     @Param('id', ParseIntPipe) id: number,
@@ -62,27 +64,27 @@ export class DonorsController {
   }
 
   @Delete(':id')
-  @Roles([Role.Admin])
-  remove(@Param('id', ParseIntPipe) id: string) {
-    return this.donorsService.remove(+id);
+  @Roles(Role.Admin)
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.donorsService.remove(id);
   }
 
   @Post(':id/inventors')
   @UsePipes(ValidationPipe)
-  @Roles([Role.Admin])
+  @Roles(Role.Admin)
   creatInventors(
-    @Param('id', ParseIntPipe) id,
-    createInventorDto: CreateInventor_nonid,
+    @Param('id', ParseIntPipe) id: number,
+    @Body() createInventorDto: CreateInventor_nonid,
   ) {
     return this.donorsService.createInventors(id, createInventorDto);
   }
 
   @Post(':id/donation')
-  @Roles([Role.Admin])
+  @Roles(Role.Admin)
   @UsePipes(ValidationPipe)
   creatDonation(
-    @Param('id', ParseIntPipe) id,
-    createDonationDtoNonDoners: CreateDonationDtoNonDoners,
+    @Param('id', ParseIntPipe) id: number,
+    @Body() createDonationDtoNonDoners: CreateDonationDtoNonDoners,
   ) {
     return this.donorsService.createDonation(id, createDonationDtoNonDoners);
   }
