@@ -8,6 +8,7 @@ export class HealthAlert {
   @Column()
   medical_id: number;
 
-  @Column()
-  data: string; 
+  @Column({ type: 'longtext' })
+data: string;
+
 }

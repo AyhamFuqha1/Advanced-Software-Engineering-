@@ -26,6 +26,30 @@ import { Role } from 'src/interfaces';
 export class HealthAlertsController {
   constructor(private readonly healthAlertsService: HealthAlertsService) {}
 
+  // ------------ NEW: External API -------------
+  @Get('external')
+  @Roles(Role.Admin, Role.Doctor)
+  async getExternalWHOData() {
+    return await this.healthAlertsService.fetchWHOData();
+  }
+
+@Get('external/:country')
+@Roles(Role.Admin, Role.Doctor, Role.Patient, Role.Donor)
+getWHOByCountry(@Param('country') country: string) {
+  return this.healthAlertsService.fetchWHOByCountry(country);
+}
+
+
+ @Post('sync/:medicalId/:country')
+syncOne(
+  @Param('medicalId') medicalId: number,
+  @Param('country') country: string,
+) {
+  return this.healthAlertsService.syncSpecificCountry(medicalId, country);
+}
+
+
+  // ------------ CRUD القديم يبقى كما هو -------------
   @Post()
   @Roles(Role.Admin)
   @UsePipes(ValidationPipe)
@@ -50,7 +74,7 @@ export class HealthAlertsController {
   @UsePipes(ValidationPipe)
   update(
     @Param('id', ParseIntPipe) id: number, 
-    @Body() updateHealthAlertDto: UpdateHealthAlertDto
+    @Body() updateHealthAlertDto
   ) {
     return this.healthAlertsService.update(id, updateHealthAlertDto);
   }

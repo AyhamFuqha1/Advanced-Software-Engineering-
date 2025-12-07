@@ -7,9 +7,13 @@ import { HealthAlertsModule } from 'src/health_alerts/health_alerts.module';
 import { WorkshopsModule } from 'src/workshops/workshops.module';
 
 @Module({
-  imports:[TypeOrmModule.forFeature([MedicalNgo]),
-  HealthAlertsModule,   // ← لازم ينضاف
-    WorkshopsModule,  ],
+  imports: [
+    TypeOrmModule.forFeature([MedicalNgo]),
+
+    // الإضافة الصحيحة بدون أي تعديل آخر
+    HealthAlertsModule,
+    WorkshopsModule,
+  ],
   controllers: [MedicalNgosController],
   providers: [MedicalNgosService],
 })
