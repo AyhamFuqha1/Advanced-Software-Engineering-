@@ -13,6 +13,6 @@ import { HealthAlert } from './entities/health_alert.entity';
   ],
   controllers: [HealthAlertsController],
   providers: [HealthAlertsService],
-  exports: [HealthAlertsService],   // ← هذا السطر هو الحل
+  exports: [HealthAlertsService],   
 })
 export class HealthAlertsModule {}

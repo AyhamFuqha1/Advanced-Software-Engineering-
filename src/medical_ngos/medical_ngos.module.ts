@@ -10,7 +10,6 @@ import { WorkshopsModule } from 'src/workshops/workshops.module';
   imports: [
     TypeOrmModule.forFeature([MedicalNgo]),
 
-    // الإضافة الصحيحة بدون أي تعديل آخر
     HealthAlertsModule,
     WorkshopsModule,
   ],

@@ -26,7 +26,6 @@ import { Role } from 'src/interfaces';
 export class HealthAlertsController {
   constructor(private readonly healthAlertsService: HealthAlertsService) {}
 
-  // ------------ NEW: External API -------------
   @Get('external')
   @Roles(Role.Admin, Role.Doctor)
   async getExternalWHOData() {
@@ -49,7 +48,6 @@ syncOne(
 }
 
 
-  // ------------ CRUD القديم يبقى كما هو -------------
   @Post()
   @Roles(Role.Admin)
   @UsePipes(ValidationPipe)

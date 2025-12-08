@@ -14,7 +14,6 @@ export class HealthAlertsService {
     private readonly alertRepo: Repository<HealthAlert>,
   ) {}
 
- // (1) جلب بيانات كل الدول
   async fetchWHOData() {
     const url = 'https://disease.sh/v3/covid-19/countries';
 
@@ -22,10 +21,9 @@ export class HealthAlertsService {
       this.http.get<any[]>(url)
     );
 
-    return response.data; // ← المصفوفة الحقيقية
+    return response.data; 
   }
 
-  // (2) جلب بيانات دولة معينة
   async fetchWHOByCountry(country: string) {
     const url = 'https://disease.sh/v3/covid-19/countries';
 
@@ -43,15 +41,12 @@ export class HealthAlertsService {
       return { message: `No data found for country: ${country}` };
     }
 
-    return filtered[0]; // نرجع أول نتيجة
+    return filtered[0]; 
   }
 
-  // (3) تخزين بيانات WHO داخل جدول health_alerts
   async syncSpecificCountry(medicalId: number, country: string) {
-  // 1. نجيب كل البيانات من WHO API
   const allCountries = await this.fetchWHOData();
 
-  // 2. نفلتر الدولة المطلوبة فقط
   const countryData = allCountries.find(
     (c) => c.country.toLowerCase() === country.toLowerCase(),
   );
@@ -59,18 +54,15 @@ export class HealthAlertsService {
   if (!countryData) {
     throw new Error(`Country not found: ${country}`);
   }
-
-  // 3. نخزن الدولة في قاعدة البيانات
   const newAlert = this.alertRepo.create({
     medical_id: medicalId,
-    data: JSON.stringify(countryData), // ← فقط دولة واحدة
+    data: JSON.stringify(countryData), 
   });
 
   return await this.alertRepo.save(newAlert);
 }
 
 
-  // CRUD القديمة تبقى كما هي
   create(dto: CreateHealthAlertDto) {
     const alert = this.alertRepo.create({
       ...dto,
