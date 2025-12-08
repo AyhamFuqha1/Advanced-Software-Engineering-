@@ -1,36 +1,85 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe, ParseIntPipe } from '@nestjs/common';
+import { 
+  Controller, 
+  Get, 
+  Post, 
+  Body, 
+  Patch, 
+  Param, 
+  Delete, 
+  UsePipes, 
+  ValidationPipe, 
+  ParseIntPipe,
+  UseGuards
+} from '@nestjs/common';
+
 import { HealthAlertsService } from './health_alerts.service';
 import { CreateHealthAlertDto } from './dto/create-health_alert.dto';
 import { UpdateHealthAlertDto } from './dto/update-health_alert.dto';
 
+import { AuthGuard } from 'src/guards/auth/auth.guard';
+import { RolesGuard } from 'src/guards/auth/roles/roles.guard';
+import { Roles } from 'src/decorators/roles/roles.decorator';
+import { Role } from 'src/interfaces';
+
 @Controller('health-alerts')
+@UseGuards(AuthGuard, RolesGuard)
 export class HealthAlertsController {
   constructor(private readonly healthAlertsService: HealthAlertsService) {}
 
+  @Get('external')
+  @Roles(Role.Admin, Role.Doctor)
+  async getExternalWHOData() {
+    return await this.healthAlertsService.fetchWHOData();
+  }
+
+@Get('external/:country')
+@Roles(Role.Admin, Role.Doctor, Role.Patient, Role.Donor)
+getWHOByCountry(@Param('country') country: string) {
+  return this.healthAlertsService.fetchWHOByCountry(country);
+}
+
+
+ @Post('sync/:medicalId/:country')
+syncOne(
+  @Param('medicalId') medicalId: number,
+  @Param('country') country: string,
+) {
+  return this.healthAlertsService.syncSpecificCountry(medicalId, country);
+}
+
+
   @Post()
+  @Roles(Role.Admin)
   @UsePipes(ValidationPipe)
   create(@Body() createHealthAlertDto: CreateHealthAlertDto) {
     return this.healthAlertsService.create(createHealthAlertDto);
   }
 
   @Get()
+  @Roles(Role.Admin, Role.Doctor, Role.Patient, Role.Donor)
   findAll() {
     return this.healthAlertsService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id',ParseIntPipe) id: number) {
-    return this.healthAlertsService.findOne(+id);
+  @Roles(Role.Admin, Role.Doctor, Role.Patient, Role.Donor)
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.healthAlertsService.findOne(id);
   }
 
   @Patch(':id')
+  @Roles(Role.Admin)
   @UsePipes(ValidationPipe)
-  update(@Param('id',ParseIntPipe) id: number, @Body() updateHealthAlertDto: UpdateHealthAlertDto) {
+  update(
+    @Param('id', ParseIntPipe) id: number, 
+    @Body() updateHealthAlertDto
+  ) {
     return this.healthAlertsService.update(id, updateHealthAlertDto);
   }
 
   @Delete(':id')
-  remove(@Param('id',ParseIntPipe) id: number) {
+  @Roles(Role.Admin)
+  remove(@Param('id', ParseIntPipe) id: number) {
     return this.healthAlertsService.remove(id);
   }
 }

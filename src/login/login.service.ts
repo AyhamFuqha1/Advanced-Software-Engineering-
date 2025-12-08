@@ -22,7 +22,9 @@ export class LoginService {
   }
 
   async login(loginDto: LoginDto) {
-    console.log("ayham");
+    console.log("LOGIN DTO FULL:", loginDto);
+    console.log("EMAIL:", loginDto.email);
+    console.log("PASSWARD:", loginDto.passward);
     const user  = await this.loginRepository.findOne({
       where: { email: loginDto.email, passward: loginDto.passward },
     });

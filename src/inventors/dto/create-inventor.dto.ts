@@ -1,4 +1,4 @@
-import { IsNotEmpty } from 'class-validator';
+import { IsInt, IsNotEmpty } from 'class-validator';
 
 export class CreateInventorDto {
   @IsNotEmpty()
@@ -8,13 +8,15 @@ export class CreateInventorDto {
   @IsNotEmpty()
   category: string;
   @IsNotEmpty()
-  id_doners: number;
+  @IsInt()
+  medical_id: number; 
 }
 
 export class CreateInventor_nonid {
   @IsNotEmpty()
   item_name: string;
   @IsNotEmpty()
+  @IsInt()
   quantity: number;
   @IsNotEmpty()
   category: string;

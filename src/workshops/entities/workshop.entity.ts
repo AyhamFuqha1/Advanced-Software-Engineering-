@@ -2,18 +2,18 @@ import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity('workshops')
 export class Workshop  {
-  @PrimaryGeneratedColumn({ name: 'id_workshop' })
+  @PrimaryGeneratedColumn({ name: 'workshop_id' })
   id_workshop: number;
 
-  @Column()
+  @Column({ name: 'topic' })
   topic: string;
 
-  @Column()
+  @Column({ name: 'date' })
   date: Date;
 
-  @Column()
+  @Column({ name: 'medical_id' })
   id_medical: number;
 
-  @Column()
+  @Column({ name: 'location' })
   location: string;
 }
