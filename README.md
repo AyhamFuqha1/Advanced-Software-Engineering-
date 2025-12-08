@@ -3,7 +3,7 @@ HealthPal – Digital Healthcare Platform
 HealthPal is a digital healthcare management platform designed to improve communication between patients, doctors, donors, NGOs, volunteers, and therapy groups. 
 The system supports donations, health alerts, workshops, reservations, anonymous therapy chats, inventory management, medical missions, and translation services.
 
-================================================================================
+===========================================================================
 
 1. Used Technologies & Tools
 
@@ -23,7 +23,7 @@ Tools:
 - Postman
 - Draw.io
 
-================================================================================
+===========================================================================
 
 2. System Architecture
 
@@ -42,7 +42,7 @@ Why this architecture?
 - Suitable for adding new modules  
 - Clear separation of concerns  
 
-================================================================================
+===========================================================================
 
 3. Database Schema (ERD)
 
@@ -59,7 +59,7 @@ The ERD represents all main system modules:
 ERD Image Path:
 docs/reprt_finsh.drawio.png
 
-================================================================================
+===========================================================================
 
 4. URI Structure (Main Endpoints)
 
@@ -129,7 +129,7 @@ POST /health-alerts/sync/:medical_id/:country
 Translation:
 POST /translation/medical
 
-================================================================================
+===========================================================================
 
 5. External API Integrations
 
@@ -154,7 +154,7 @@ Used for:
 Endpoint:
 POST /translation/medical
 
-================================================================================
+===========================================================================
 
 6. GitHub Repository Structure
 
@@ -174,7 +174,7 @@ src/
 docs/
  └── reprt_finsh.drawio.png
 
-================================================================================
+===========================================================================
 
 7. Problem-Solving Approach
 
@@ -190,7 +190,7 @@ Our approach:
 - Secure authentication  
 - Clean ERD structure  
 
-================================================================================
+===========================================================================
 
 8. Wiki Documentation
 
@@ -203,7 +203,7 @@ The Wiki contains:
 
 Wiki link will be added later.
 
-================================================================================
+===========================================================================
 
 9. Running the Project
 
@@ -220,7 +220,7 @@ DB_USER=root
 DB_PASS=momoali2003
 DB_NAME=healthpal
 
-================================================================================
+===========================================================================
 
 Team Members:
 - Mahmoud Yaseen
