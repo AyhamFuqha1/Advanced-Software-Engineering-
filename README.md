@@ -33,7 +33,7 @@ The system follows a modular layered architecture:
 - Service Layer → business logic
 - Repository Layer → database operations with TypeORM
 - DTO + Validation Layer → class-validator
-- Auth Layer → JWT + Guards
+- Auth Layer → JWT + Middleware + Guards
 - External API Layer → WHO health data & translation API
 
 Why this architecture?
@@ -145,15 +145,6 @@ Used to fetch:
 Custom endpoint:
 POST /health-alerts/sync/:medical_id/:country
 
-2) LibreTranslate API  
-Used for:
-- Translating symptoms  
-- Translating medical terms  
-- Supporting multilingual patients  
-
-Endpoint:
-POST /translation/medical
-
 ===========================================================================
 
 6. GitHub Repository Structure
@@ -217,7 +208,6 @@ Environment Variables:
 DB_HOST=localhost
 DB_PORT=3306
 DB_USER=root
-DB_PASS=momoali2003
 DB_NAME=healthpal
 
 ===========================================================================
