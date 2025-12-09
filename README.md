@@ -15,7 +15,6 @@ Backend:
 
 External APIs:
 - Disease.sh API → real-time global & country-specific health alerts
-- LibreTranslate API → translation of medical terms & general text
 
 Tools:
 - GitHub
