@@ -59,6 +59,8 @@ The ERD represents all main system modules:
 ERD Image Path:
 docs/reprt_finsh.drawio.png
 
+![ERD](./docs/reprt_finsh.drawio.png)
+
 ===========================================================================
 
 4. URI Structure (Main Endpoints)
