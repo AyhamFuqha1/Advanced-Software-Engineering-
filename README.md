@@ -1,98 +1,228 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+HealthPal – Digital Healthcare Platform
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+HealthPal is a digital healthcare management platform designed to improve communication between patients, doctors, donors, NGOs, volunteers, and therapy groups. 
+The system supports donations, health alerts, workshops, reservations, anonymous therapy chats, inventory management, medical missions, and translation services.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+===========================================================================
 
-## Description
+1. Used Technologies & Tools
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Backend:
+- NestJS (Node.js + TypeScript)
+- TypeORM
+- MySQL Database
+- JWT Authentication
 
-## Project setup
+External APIs:
+- Disease.sh API → real-time global & country-specific health alerts
+- LibreTranslate API → translation of medical terms & general text
 
-```bash
-$ yarn install
-```
+Tools:
+- GitHub
+- VSCode
+- Postman
+- Draw.io
 
-## Compile and run the project
+===========================================================================
 
-```bash
-# development
-$ yarn run start
+2. System Architecture
 
-# watch mode
-$ yarn run start:dev
+The system follows a modular layered architecture:
 
-# production mode
-$ yarn run start:prod
-```
+- Controller Layer → handles HTTP requests
+- Service Layer → business logic
+- Repository Layer → database operations with TypeORM
+- DTO + Validation Layer → class-validator
+- Auth Layer → JWT + Middleware + Guards
+- External API Layer → WHO health data & translation API
 
-## Run tests
+Why this architecture?
+- Scalable  
+- Easy to maintain  
+- Suitable for adding new modules  
+- Clear separation of concerns  
 
-```bash
-# unit tests
-$ yarn run test
+===========================================================================
 
-# e2e tests
-$ yarn run test:e2e
+3. Database Schema (ERD)
 
-# test coverage
-$ yarn run test:cov
-```
+The ERD represents all main system modules:
+- Doctors, Patients
+- Donors, Donations
+- NGOs, Medical Missions
+- Workshops, Reservations
+- Inventory Management
+- Anonymous Therapy Chats
+- Health Alerts
+- Translation
 
-## Deployment
+ERD Image Path:
+docs/reprt_finsh.drawio.png
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+![ERD](./docs/reprt_finsh.drawio.png)
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+===========================================================================
 
-```bash
-$ yarn install -g @nestjs/mau
-$ mau deploy
-```
+4. URI Structure (Main Endpoints)
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+Authentication:
+POST /login
 
-## Resources
+Patients:
+POST   /patients
+GET    /patients
+GET    /patients/:id
+PATCH  /patients/:id
+DELETE /patients/:id
 
-Check out a few resources that may come in handy when working with NestJS:
+Patient Reservations:
+POST /patients/:id/reservation
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+Request Medicine:
+POST /patients/:id/requestMedicine
+POST /patients/requestMedicine
 
-## Support
+Doctors:
+POST   /doctor
+GET    /doctor
+GET    /doctor/:id
+PATCH  /doctor/:id
+DELETE /doctor/:id
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+Donors:
+POST   /donors
+GET    /donors
+GET    /donors/:id
+PATCH  /donors/:id
+DELETE /donors/:id
 
-## Stay in touch
+Donation Requests:
+POST   /don-req
+GET    /don-req
+GET    /don-req/:id
+PATCH  /don-req/:id
+DELETE /don-req/:id
+GET    /don-req/dashboard/:id
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+Medical NGOs:
+POST   /medical-ngos
+GET    /medical-ngos
+GET    /medical-ngos/:id
+PATCH  /medical-ngos/:id
+DELETE /medical-ngos/:id
 
-## License
+Reservations:
+POST   /reservations
+GET    /reservations
+GET    /reservations/:id
+PATCH  /reservations/:id
+DELETE /reservations/:id
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+Anonymous Therapy Chats:
+POST   /anonymous-therapy-chats
+GET    /anonymous-therapy-chats
+GET    /anonymous-therapy-chats/:id
+DELETE /anonymous-therapy-chats/:id
+
+Health Alerts:
+GET  /health-alerts/external
+POST /health-alerts/sync/:medical_id/:country
+
+Translation:
+POST /translation/medical
+
+===========================================================================
+
+5. External API Integrations
+
+1) Disease.sh API  
+Used to fetch:
+- Cases  
+- Deaths  
+- Recoveries  
+- Active cases  
+- Tests  
+- Country info  
+
+Custom endpoint:
+POST /health-alerts/sync/:medical_id/:country
+
+===========================================================================
+
+6. GitHub Repository Structure
+
+src/
+ ├── auth
+ ├── doctors
+ ├── patients
+ ├── donations
+ ├── medical-ngos
+ ├── health_alerts
+ ├── translation
+ ├── inventory
+ ├── reservations
+ ├── anonymous_therapy_chats
+ └── ...
+
+docs/
+ └── reprt_finsh.drawio.png
+
+===========================================================================
+
+7. Problem-Solving Approach
+
+The system solves:
+- Lack of centralized healthcare coordination  
+- Difficulty in donation and NGO management  
+- Need for multilingual features  
+- Need for up‑to‑date health alerts  
+
+Our approach:
+- Modular system design  
+- Smart API integrations  
+- Secure authentication  
+- Clean ERD structure  
+
+===========================================================================
+
+8. Wiki Documentation
+
+The Wiki contains:
+- Architecture explanation  
+- ERD  
+- Features list  
+- All endpoints  
+- Module descriptions  
+
+Wiki link will be added later.
+
+===========================================================================
+
+9. Running the Project
+
+Install dependencies:
+yarn install
+
+Run in development mode:
+yarn start:dev
+
+Environment Variables:
+DB_HOST=localhost
+DB_PORT=3306
+DB_USER=root
+DB_NAME=healthpal
+
+===========================================================================
+
+Team Members:
+- Mahmoud Yaseen
+- Ayham Fuqaha
+- Abdelfattah Al-Malak
+
+Demo Video:
+Will be uploaded later.
+
+Notes:
+- Endpoints documented in Postman  
+- External API integration tested  
+- ERD available in docs/  
