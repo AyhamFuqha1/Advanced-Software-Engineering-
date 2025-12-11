@@ -127,6 +127,9 @@ export class AppModule {
   { path: 'inventors', method: RequestMethod.ALL },
   { path: 'inventors/*', method: RequestMethod.ALL },
 
+  { path: 'medical-ngos', method: RequestMethod.ALL },
+  { path: 'medical-ngos/*', method: RequestMethod.ALL },
+
   { path: 'requesting-medicine', method: RequestMethod.ALL },
   { path: 'requesting-medicine/*', method: RequestMethod.ALL },
 
@@ -138,7 +141,12 @@ export class AppModule {
 
   { path: 'workshops', method: RequestMethod.ALL },
   { path: 'workshops/*', method:RequestMethod.ALL },
-);
+
+  { path: 'translations', method: RequestMethod.ALL },
+  { path: 'translations/*', method: RequestMethod.ALL },
+
+)
+
 
 
   }

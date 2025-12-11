@@ -41,7 +41,7 @@ export class PatientsController {
   }
 
   @Get(':id')
-  @Roles(Role.Admin, Role.Patient)
+  @Roles(Role.Admin)
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.patientsService.findOne(id);
   }

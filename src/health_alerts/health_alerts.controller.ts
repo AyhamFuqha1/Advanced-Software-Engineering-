@@ -40,6 +40,7 @@ getWHOByCountry(@Param('country') country: string) {
 
 
  @Post('sync/:medicalId/:country')
+ @Roles(Role.Admin, Role.Doctor)
 syncOne(
   @Param('medicalId') medicalId: number,
   @Param('country') country: string,
