@@ -15,7 +15,7 @@ Backend:
 
 External APIs:
 - Disease.sh API → real-time global & country-specific health alerts
-- LibreTranslate API → translation of medical terms & general text
+
 
 Tools:
 - GitHub
@@ -145,14 +145,6 @@ Used to fetch:
 Custom endpoint:
 POST /health-alerts/sync/:medical_id/:country
 
-2) LibreTranslate API  
-Used for:
-- Translating symptoms  
-- Translating medical terms  
-- Supporting multilingual patients  
-
-Endpoint:
-POST /translation/medical
 
 ===========================================================================
 
@@ -217,7 +209,7 @@ Environment Variables:
 DB_HOST=localhost
 DB_PORT=3306
 DB_USER=root
-DB_PASS=momoali2003
+DB_PASS=
 DB_NAME=healthpal
 
 ===========================================================================
