@@ -52,7 +52,7 @@ import { AuthMiddleware } from './middleware/auth.middleware';
       type: 'mysql',
       database: 'healthpal',
       username: 'root',
-      password: 'momoali2003',
+      password: '',
       port: 3306,
       host: 'localhost',
       synchronize: false,
